@@ -1,5 +1,5 @@
 <?php
-namespace SsdPHP\Pulgins;
+namespace SsdPHP\Pulgins\Common;
 
 use SsdPHP\SsdPHP;
 
@@ -178,8 +178,6 @@ class Error{
         }
     }
 }
-register_shutdown_function('SsdPHP\Pulgins\Error::fatalError');
-set_error_handler('SsdPHP\Pulgins\Error::error_handler',E_ALL);
-set_exception_handler('SsdPHP\Pulgins\Error::exception_handler');
-
+set_error_handler('SsdPHP\Pulgins\Common\Error::error_handler',E_ALL);
+set_exception_handler('SsdPHP\Pulgins\Common\Error::exception_handler');
 ?>
