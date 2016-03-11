@@ -1,5 +1,5 @@
 <?php
-namespace SsdPHP\Pulgins;
+namespace SsdPHP\Pulgins\Common;
 use SsdPHP\SsdPHP;
 
 /**
