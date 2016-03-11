@@ -1,0 +1,1 @@
+参考SlightPHP Thinkphp 设计思路。
