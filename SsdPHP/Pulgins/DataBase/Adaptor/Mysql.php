@@ -389,25 +389,16 @@ class Mysql{
 			if($this->engine=="mysql"){
 				Mysql::$_globals[$this->_key] = \mysql_connect($this->host.":".$this->port,$this->user,$this->password,true);
 				if(!Mysql::$_globals[$this->_key]){
-					if(defined("DEBUG")){
-						trigger_error("CONNECT DATABASE ERROR ( ".mysql_error()." ) ",E_USER_WARNING);
-					}else{
-						trigger_error("CONNECT DATABASE ERROR!!!",E_USER_WARNING);
-					}
-					return false;
+
+                    throw new \Exception("CONNECT DATABASE ERROR!!!".mysql_error());
 				}
 				if($this->database!=""){
 					\mysql_select_db($this->database,Mysql::$_globals[$this->_key]);
 				}
 			}elseif($this->engine=="mysqli"){
-				Mysql::$_globals[$this->_key] = new mysqli($this->host,$this->user,$this->password,$this->database,$this->port);
+                Mysql::$_globals[$this->_key] = new \mysqli($this->host,$this->user,$this->password,$this->database,$this->port);
 				if(Mysql::$_globals[$this->_key]->connect_errno) {
-					if(defined("DEBUG")){
-						trigger_error("CONNECT DATABASE ERROR ( ".Mysql::$_globals[$this->_key]->connect_error." ) ",E_USER_WARNING);
-					}else{
-						trigger_error("CONNECT DATABASE ERROR!!!",E_USER_WARNING);
-					}
-					return false;
+                    throw new \Exception("CONNECT DATABASE ERROR!!!".Mysql::$_globals[$this->_key]->connect_error);
 				}
 			}else{
 				$tmp = explode("_",$this->engine);
@@ -415,12 +406,10 @@ class Mysql{
 				try{
                     Mysql::$_globals[$this->_key] = new \PDO($driver .":dbname=".$this->database.";host=".$this->host.";port=".$this->port,$this->user,$this->password);
 				}catch(\Exception $e){
-					if(defined("DEBUG")){
-						trigger_error("CONNECT DATABASE ERROR ( ".$e->getMessage()." ) ",E_USER_WARNING);
-					}else{
-						trigger_error("CONNECT DATABASE ERROR!!!",E_USER_WARNING);
-					}
-					return false;
+
+                    throw new \Exception("CONNECT DATABASE ERROR!!!".$e->getMessage());
+
+
 				}
 			}
 		}
