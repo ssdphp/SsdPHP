@@ -1,4 +1,5 @@
 <?php
+/* php version >= 5.3.5 */
 define("start",microtime(true));
 if(!class_exists('\SsdPHP\SsdPHP',false))
 {
