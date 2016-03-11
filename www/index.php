@@ -6,9 +6,9 @@ if(!class_exists('\SsdPHP\SsdPHP',false))
 echo SsdPHP\SsdPHP::bootstrap(function ($rootPath=""){
 
 
-    SsdPHP\Pulgins\Error::$LOG     =SsdPHP\SsdPHP::isDebug();
-    SsdPHP\Pulgins\Error::$CONSOLE =SsdPHP\SsdPHP::isDebug();
+    SsdPHP\Pulgins\Common\Error::$LOG     =SsdPHP\SsdPHP::isDebug();
+    SsdPHP\Pulgins\Common\Error::$CONSOLE =SsdPHP\SsdPHP::isDebug();
     SsdPHP\Core\Config::load(SsdPHP\SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
-    SsdPHP\Pulgins\Route::set(SsdPHP\Core\Config::getField('ROUTE','home'));
+    SsdPHP\Pulgins\Common\Route::set(SsdPHP\Core\Config::getField('ROUTE','home'));
 
 })->run() === false ? "404 error!" : '' ;
