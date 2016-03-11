@@ -223,7 +223,7 @@ class SsdPHP{
     public static function registerAutoLoad(){
 
         /*自动加载*/
-        spl_autoload_register('SsdPHP\SsdPHP::autoLoad');
+        spl_autoload_register('self::autoLoad');
         self::registerComposerLoader();
         return true;
     }
