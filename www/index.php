@@ -6,6 +6,7 @@ if(!class_exists('\SsdPHP\SsdPHP',false))
     require(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."SsdPHP".DIRECTORY_SEPARATOR."SsdPHP.php");
 }
 echo SsdPHP\SsdPHP::bootstrap(function (){
+    date_default_timezone_set('PRC');
     SsdPHP\Pulgins\Common\RegShutdownEvent::register();
     #SsdPHP\SsdPHP::setDebug(false);
     SsdPHP\Pulgins\Common\Error::$LOG     =SsdPHP\SsdPHP::isDebug();
