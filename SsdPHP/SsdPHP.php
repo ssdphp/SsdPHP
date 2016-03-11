@@ -58,16 +58,6 @@ class SsdPHP{
     private static $pathInfo="";
 
     /**
-     * @var string
-     */
-    private static $appDir="";
-
-    /**
-     * @var string
-     */
-    private static $pulginsDir="";
-
-    /**
      * @var bool
      */
     private static $debug=true;
