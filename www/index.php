@@ -1,5 +1,5 @@
 <?php
-/* php version >= 5.3.5 */
+/* php version >= 5.3.6 */
 if(!class_exists('\SsdPHP\SsdPHP',false))
     require(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."SsdPHP".DIRECTORY_SEPARATOR."SsdPHP.php");
 echo
