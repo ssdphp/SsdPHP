@@ -1,7 +1,8 @@
 <?php
 namespace SsdPHP\Pulgins\Common;
 
-use SsdPHP\SsdPHP;
+use SsdPHP\SsdPHP,
+	SsdPHP\Pulgins\Common\RegShutdownEvent;
 
 class Error{
 
@@ -179,7 +180,7 @@ class Error{
     }
 }
 if(SsdPHP::isDebug()){
-	\SsdPHP\Pulgins\Common\RegShutdownEvent::add('SsdPHP\Pulgins\Common\Error::fatalError');
+	RegShutdownEvent::add('SsdPHP\Pulgins\Common\Error::fatalError');
 	set_error_handler('SsdPHP\Pulgins\Common\Error::error_handler',E_ALL);
 	set_exception_handler('SsdPHP\Pulgins\Common\Error::exception_handler');
 }
