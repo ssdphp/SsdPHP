@@ -6,15 +6,15 @@ use SsdPHP\SsdPHP;
 class Error{
 
 	/**
-	 * 
+	 * 是否打印
 	 */
-	static $CONSOLE=true;
+	static $CONSOLE=false;
 	/**
-	 * 
+	 * 是否记录
 	 */
 	static $LOG=false;
 	/**
-	 * 
+	 * 记录文件
 	 */
 	static $LOGFILE="";
 
