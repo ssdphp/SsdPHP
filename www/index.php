@@ -6,7 +6,8 @@ echo
 SsdPHP\SsdPHP::bootstrap(function (){
     date_default_timezone_set('PRC');
     SsdPHP\Pulgins\Common\RegShutdownEvent::register();
-    SsdPHP\SsdPHP::setDebug(false);
+    #SsdPHP\SsdPHP::setDebug(false);
+    SsdPHP\Pulgins\Common\Error::$CONSOLE =SsdPHP\SsdPHP::isDebug();
     SsdPHP\Core\Config::load(SsdPHP\SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
     SsdPHP\Pulgins\Common\Route::set(SsdPHP\Core\Config::getField('ROUTE','home'));
 
