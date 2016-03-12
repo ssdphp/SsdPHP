@@ -2,14 +2,19 @@
 /* php version >= 5.3.6 */
 if(!class_exists('\SsdPHP\SsdPHP',false))
     require(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."SsdPHP".DIRECTORY_SEPARATOR."SsdPHP.php");
+use SsdPHP\Pulgins\Common\RegShutdownEvent,
+    SsdPHP\Pulgins\Common\Route,
+    SsdPHP\Pulgins\Common\Error,
+    SsdPHP\Core\Config,
+    SsdPHP\SsdPHP;
 echo
-SsdPHP\SsdPHP::bootstrap(function (){
+SsdPHP::Bootstrap(function (){
     date_default_timezone_set('PRC');
-    SsdPHP\Pulgins\Common\RegShutdownEvent::register();
-    #SsdPHP\SsdPHP::setDebug(false);
-    SsdPHP\Pulgins\Common\Error::$CONSOLE =SsdPHP\SsdPHP::isDebug();
-    SsdPHP\Core\Config::load(SsdPHP\SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
-    SsdPHP\Pulgins\Common\Route::set(SsdPHP\Core\Config::getField('ROUTE','home'));
+    RegShutdownEvent::register();
+    #SsdPHP::setDebug(false);
+    Error::$CONSOLE =SsdPHP::isDebug();
+    Config::load(SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
+    Route::set(SsdPHP\Core\Config::getField('ROUTE','home'));
 
-})->run() === false ? "404 error!" : ''
+})->Run() === false ? "404 error!" : ''
 ;
