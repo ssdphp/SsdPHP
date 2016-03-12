@@ -1,1 +1,1 @@
-参考SlightPHP Thinkphp 设计思路。
+参考SlightPHP Thinkphp zphp 设计思路
