@@ -286,7 +286,7 @@ class SsdPHP{
     /*
      * 引导回调
      */
-    public static function bootstrap($fun=Null){
+    public static function Bootstrap($fun=Null){
         self::registerAutoLoad();
         if(is_callable($fun)){
             call_user_func($fun);
@@ -298,7 +298,7 @@ class SsdPHP{
      * @param string $path
      * @return mixed
      */
-    public static function run($path=""){
+    public static function Run($path=""){
         $splitFlag = preg_quote(self::$splitFlag,"/");
         $path_array = array();
         $url_param = array();
