@@ -14,7 +14,7 @@ SsdPHP::Bootstrap(function (){
     #SsdPHP::setDebug(false);
     Error::$CONSOLE =SsdPHP::isDebug();
     Config::load(SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
-    Route::set(SsdPHP\Core\Config::getField('ROUTE','home'));
+    Route::set(Config::getField('ROUTE','home'));
 
 })->Run() === false ? "404 error!" : ''
 ;
