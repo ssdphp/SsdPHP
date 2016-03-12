@@ -9,13 +9,13 @@ class Factory
 
     private static $isStart = false;
 
-    public static function getInstance($adapter = 'File', $config = null)
+    public static function getInstance($adapter = 'Redis', $config = null)
     {
         $className = __NAMESPACE__ . "\\Adaptor\\{$adapter}";
         return SFactory::getInstance($className, $config);
     }
 
-    public static function Start( $sessionType="File" ,$config=null){
+    public static function Start( $sessionType="" ,$config=null){
 
         if(self::$isStart === false){
 
