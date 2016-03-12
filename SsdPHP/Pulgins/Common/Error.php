@@ -178,6 +178,8 @@ class Error{
         }
     }
 }
-set_error_handler('SsdPHP\Pulgins\Common\Error::error_handler',E_ALL);
-set_exception_handler('SsdPHP\Pulgins\Common\Error::exception_handler');
+if(SsdPHP::isDebug()){
+	set_error_handler('SsdPHP\Pulgins\Common\Error::error_handler',E_ALL);
+	set_exception_handler('SsdPHP\Pulgins\Common\Error::exception_handler');
+}
 ?>
