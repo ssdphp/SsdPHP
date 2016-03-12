@@ -179,9 +179,8 @@ class Error{
     }
 }
 if(SsdPHP::isDebug()){
+	\SsdPHP\Pulgins\Common\RegShutdownEvent::add('SsdPHP\Pulgins\Common\Error::fatalError');
 	set_error_handler('SsdPHP\Pulgins\Common\Error::error_handler',E_ALL);
 	set_exception_handler('SsdPHP\Pulgins\Common\Error::exception_handler');
-	\SsdPHP\Pulgins\Common\Error::$LOG     =SsdPHP::isDebug();
-	\SsdPHP\Pulgins\Common\Error::$CONSOLE =SsdPHP::isDebug();
 }
 ?>
