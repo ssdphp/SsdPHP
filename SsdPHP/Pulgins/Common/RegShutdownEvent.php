@@ -22,10 +22,7 @@ class RegShutdownEvent {
      * array to store user events.
      * @var array
      */
-    private static $_events = array(
-        //致命错误的处理
-        array('SsdPHP\Pulgins\Common\Error::fatalError')
-    );
+    private static $_events = array();
 
 
     /**
