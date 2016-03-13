@@ -3,7 +3,6 @@
 if(!class_exists('\SsdPHP\SsdPHP'))
     require(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."SsdPHP".DIRECTORY_SEPARATOR."SsdPHP.php");
 use SsdPHP\Pulgins\Common\RegShutdownEvent,
-    SsdPHP\Pulgins\Session\Factory as Session,
     SsdPHP\Pulgins\Common\Route,
     SsdPHP\Pulgins\Common\Error,
     SsdPHP\Core\Config,
