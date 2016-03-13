@@ -16,6 +16,5 @@ SsdPHP::Bootstrap(function (){
     Error::$CONSOLE =SsdPHP::isDebug();
     Config::load(SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
     Route::set(Config::getField('ROUTE','home'));
-    Session::Start('Redis');
 })->Run() === false ? "404 error!" : ''
 ;
