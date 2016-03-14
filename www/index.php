@@ -7,13 +7,13 @@ use SsdPHP\Pulgins\Common\RegShutdownEvent,
     SsdPHP\Pulgins\Common\Error,
     SsdPHP\Core\Config,
     SsdPHP\SsdPHP;
-echo
-SsdPHP::Bootstrap(function (){
+echo($r = SsdPHP::Bootstrap(function (){
+    
     date_default_timezone_set('PRC');
     RegShutdownEvent::register();
     #SsdPHP::setDebug(false);
     Error::$CONSOLE =SsdPHP::isDebug();
     Config::load(SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
     Route::set(Config::getField('ROUTE','home'));
-})->Run() === false ? "404 error!" : ''
-;
+
+})->Run()) === false ? "404 error!" : $r;
