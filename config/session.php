@@ -30,7 +30,7 @@
 return array(
 
     "Session"=>array(
-        'sessionType' => "Redis",
+        'sessionType' => "",
         'new_cache_expire' => 30,
         'sid_prefix' => "SSDPHP:SESSION:",
     ),
