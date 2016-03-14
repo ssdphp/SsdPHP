@@ -361,9 +361,9 @@ class SsdPHP{
                         throw new \ReflectionException($method->class."::{$method->name} must be only one param!");
                     }
                     $p = array($params[0]->getName()=>$path_array);
-                    $method->invokeArgs($classInstance,$p);
+                    $r = $method->invokeArgs($classInstance,$p);
                 }else{
-                    $method->invoke($classInstance);
+                    $r = $method->invoke($classInstance);
                 }
 
                 // 后置调用
@@ -373,7 +373,7 @@ class SsdPHP{
                         $before->invoke($classInstance);
                     }
                 }
-                return true;
+                return $r;
             }else{
                 throw new \ReflectionException("must be PUBLIC and NOT STATIC method");
             }
