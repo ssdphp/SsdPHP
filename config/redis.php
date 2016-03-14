@@ -19,7 +19,7 @@ return array(
     'Redis'=>array(
         'Main'=>array(
             array(
-                'host'=>"127.0.0.1",
+                'host'=>"192.168.8.50",
                 'port'=>"6379",
                 )
         ),
