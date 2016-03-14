@@ -8,7 +8,7 @@ use SsdPHP\Pulgins\Common\RegShutdownEvent,
     SsdPHP\Core\Config,
     SsdPHP\SsdPHP;
 echo($r = SsdPHP::Bootstrap(function (){
-    
+
     date_default_timezone_set('PRC');
     RegShutdownEvent::register();
     #SsdPHP::setDebug(false);
@@ -16,4 +16,4 @@ echo($r = SsdPHP::Bootstrap(function (){
     Config::load(SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
     Route::set(Config::getField('ROUTE','home'));
 
-})->Run()) === false ? "404 error!" : $r;
+})->Run()) !== false ? $r : "404 error!" ;
