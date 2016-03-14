@@ -392,6 +392,13 @@ class SsdPHP{
         self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
         return self::$_rootpath;
     }
+    public static function setRootPath($path=""){
+        if(!empty($path) && is_dir($path)){
+            self::$_rootpath = $path;
+        }
+        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
+        return self::$_rootpath;
+    }
 
     /**
      * 自动加载类
