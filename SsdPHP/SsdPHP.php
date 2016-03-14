@@ -232,15 +232,15 @@ class SsdPHP{
     private static function registerComposerLoader()
     {
 
-        if (is_file(self::getRootPath() . '/vendor/composer/autoload_namespaces.php')) {
-            $map = require dirname(__DIR__) . '/vendor/composer/autoload_namespaces.php';
+        if (is_file(self::getRootPath() . 'vendor/composer/autoload_namespaces.php')) {
+            $map = require self::getRootPath() . 'vendor/composer/autoload_namespaces.php';
             foreach ($map as $namespace => $path) {
                 self::$prefixesPsr0[$namespace[0]][$namespace] = (array) $path;
             }
         }
 
-        if (is_file(self::getRootPath() . '/vendor/composer/autoload_psr4.php')) {
-            $map = require self::getRootPath() . '/vendor/composer/autoload_psr4.php';
+        if (is_file(self::getRootPath() . 'vendor/composer/autoload_psr4.php')) {
+            $map = require self::getRootPath() . 'vendor/composer/autoload_psr4.php';
             foreach ($map as $namespace => $path) {
                 $length = strlen($namespace);
                 if ('\\' !== $namespace[$length - 1]) {
@@ -251,15 +251,15 @@ class SsdPHP{
             }
         }
 
-        if (is_file(self::getRootPath() . '/vendor/composer/autoload_classmap.php')) {
-            $classMap = require self::getRootPath() . '/vendor/composer/autoload_classmap.php';
+        if (is_file(self::getRootPath() . 'vendor/composer/autoload_classmap.php')) {
+            $classMap = require self::getRootPath() . 'vendor/composer/autoload_classmap.php';
             if ($classMap) {
                 self::addMap($classMap);
             }
         }
 
-        if (is_file( self::getRootPath() . '/composer/autoload_files.php')) {
-            $includeFiles = require self::getRootPath() . '/composer/autoload_files.php';
+        if (is_file( self::getRootPath() . 'vendor/composer/autoload_files.php')) {
+            $includeFiles = require self::getRootPath() . 'vendor/composer/autoload_files.php';
             foreach ($includeFiles as $fileIdentifier => $file) {
                 self::composerRequire($fileIdentifier, $file);
             }
