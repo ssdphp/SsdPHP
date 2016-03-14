@@ -16,7 +16,7 @@ class Factory
         return SFactory::getInstance($className, $config);
     }
 
-    public static function Start( $sessionType="" ,$config=null){
+    public static function Start($config=null){
 
         if(self::$isStart === false){
 
@@ -43,8 +43,8 @@ class Factory
                 session_id($_SERVER[$sessionName]);
             }
 
-            if (!empty($sessionType)) {
-                $handler = self::getInstance($sessionType, $config);
+            if (!empty($config['sessionType'])) {
+                $handler = self::getInstance($config['sessionType'], $config);
                 session_set_save_handler(
                     array($handler, 'open'),
                     array($handler, 'close'),
