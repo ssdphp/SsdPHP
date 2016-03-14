@@ -24,11 +24,13 @@
  *     'save_path' => null,
  *     'session_name' => 'SSDPHPSESSID',
  *     'sid_prefix' => 'SSDPHP:SESSION:',//redis key 前缀
+ *     'sessionType' => '',//session类型，默认phpsession处理机制，File,Redis
  * )
  */
 return array(
 
     "Session"=>array(
+        'sessionType' => "Redis",
         'new_cache_expire' => 30,
         'sid_prefix' => "SSDPHP:SESSION:",
     ),
