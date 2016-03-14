@@ -23,14 +23,14 @@
  *     'httponly' => true,
  *     'save_path' => null,
  *     'session_name' => 'SSDPHPSESSID',
- *     'sid_prefix' => 'SSDPHPSESSID',
+ *     'sid_prefix' => 'SSDPHP:SESSION:',//redis key 前缀
  * )
  */
 return array(
 
     "Session"=>array(
-        'new_cache_expire' => 30, //存活时间
-        'sid_prefix' => "SSDPHP:", //存活时间
+        'new_cache_expire' => 30,
+        'sid_prefix' => "SSDPHP:SESSION:",
     ),
 
 );
