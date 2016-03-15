@@ -1,5 +1,5 @@
 <?php
-namespace Home\controller;
+namespace App\Home\controller;
 
 use SsdPHP\Pulgins\DataBase\Factory as MysqlFactory,
     SsdPHP\Pulgins\Cache\Factory as CacheFactory,

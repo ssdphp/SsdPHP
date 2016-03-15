@@ -21,9 +21,9 @@ return array(
             //SMTP servers
             'Host'=>"smtp.mxhichina.com",
             //SMTP username  注意：普通邮件认证不需要加 @域名
-            'Username'=>"postmaster@xxxx.com",
+            'Username'=>"postmaster@bynxl.com",
             //SMTP password
-            'Password'=>"xxxx",
+            'Password'=>"Hentanx0",
             //发件人邮箱
             'From'=>"postmaster@bynxl.com",
             //发件人昵称

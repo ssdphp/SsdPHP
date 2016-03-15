@@ -12,6 +12,7 @@ if(($r = SsdPHP::Bootstrap(function (){
     date_default_timezone_set('PRC');
     RegShutdownEvent::register();
     #SsdPHP::setDebug(false);
+    #SsdPHP::setAppDir("");
     Error::$CONSOLE =SsdPHP::isDebug();
     Config::load(SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
     Route::set(Config::getField('ROUTE','home'));
