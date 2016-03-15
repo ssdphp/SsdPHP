@@ -23,7 +23,7 @@ return array(
             //SMTP username  注意：普通邮件认证不需要加 @域名
             'Username'=>"postmaster@bynxl.com",
             //SMTP password
-            'Password'=>"Hentanx0",
+            'Password'=>"xxxx",
             //发件人邮箱
             'From'=>"postmaster@bynxl.com",
             //发件人昵称
