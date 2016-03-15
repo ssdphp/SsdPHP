@@ -294,7 +294,7 @@ class SsdPHP{
         return new SsdPHP();
     }
 
-    private static $appdir="app";
+    private static $appdir="App";
 
     public static function setAppDir($path = ""){
         self::$appdir = $path;
@@ -339,7 +339,7 @@ class SsdPHP{
         self::$model  	    = !empty($path_array[0]) ? $path_array[0] : self::$defaultModel ;
         self::$controller   = !empty($path_array[1]) ? $path_array[1] : self::$defaultController ;
         self::$action  	    = !empty($path_array[2]) ? $path_array[2] : self::$defaultAction ;
-        $classname  = self::getAppDir()."\\".self::$model."\\controller\\".self::$controller;
+        $classname  = trim(self::getAppDir()."\\".self::$model."\\controller\\".self::$controller,"\\");
         try{
             if(!class_exists($classname,true)){
                 throw new \ReflectionException("classname:[ $classname ] no exists ");
