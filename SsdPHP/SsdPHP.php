@@ -336,10 +336,11 @@ class SsdPHP{
             }
         }
 
-        self::$model  	    = !empty($path_array[0]) ? $path_array[0] : self::$defaultModel ;
-        self::$controller   = !empty($path_array[1]) ? $path_array[1] : self::$defaultController ;
-        self::$action  	    = !empty($path_array[2]) ? $path_array[2] : self::$defaultAction ;
-        $classname  = trim(self::getAppDir()."\\".self::$model."\\controller\\".self::$controller,"\\");
+        self::setModel(!empty($path_array[0]) ? $path_array[0] : self::getDefaultModel());
+        self::setController(!empty($path_array[1]) ? $path_array[1] : self::getDefaultController());
+        self::setAction(!empty($path_array[2]) ? $path_array[2] : self::getDefaultAction());
+
+        $classname  = trim(self::getAppDir()."\\".self::getModel()."\\controller\\".self::getController(),"\\");
         try{
             if(!class_exists($classname,true)){
                 throw new \ReflectionException("classname:[ $classname ] no exists ");
