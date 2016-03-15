@@ -35,7 +35,7 @@ class SsdPHP{
     /**
      * @var string
      */
-    private static $defaultModel        ="home";
+    private static $defaultModel        ="Home";
 
     /**
      * @var string
@@ -294,6 +294,15 @@ class SsdPHP{
         return new SsdPHP();
     }
 
+    private static $appdir="app";
+
+    public static function setAppDir($path = ""){
+        self::$appdir = $path;
+    }
+    public static function getAppDir(){
+        return self::$appdir;
+    }
+
     /**运行
      * @param string $path
      * @return mixed
@@ -330,7 +339,7 @@ class SsdPHP{
         self::$model  	    = !empty($path_array[0]) ? $path_array[0] : self::$defaultModel ;
         self::$controller   = !empty($path_array[1]) ? $path_array[1] : self::$defaultController ;
         self::$action  	    = !empty($path_array[2]) ? $path_array[2] : self::$defaultAction ;
-        $classname  = self::$model."\\controller\\".self::$controller;
+        $classname  = self::getAppDir()."\\".self::$model."\\controller\\".self::$controller;
         try{
             if(!class_exists($classname,true)){
                 throw new \ReflectionException("classname:[ $classname ] no exists ");
