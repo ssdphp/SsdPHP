@@ -23,7 +23,7 @@ class Config
      */
     public static function load($configPath)
     {
-        $tmpfile = self::_tmpDir().DIRECTORY_SEPARATOR.md5(realpath($configPath));
+        $tmpfile = sys_get_temp_dir().DIRECTORY_SEPARATOR.md5(realpath($configPath));
         fileatime($configPath);
         if(is_file($tmpfile) && filemtime($tmpfile)>=filemtime($configPath)){
             self::$config = include $tmpfile;
@@ -40,20 +40,6 @@ class Config
         self::$configPath = $configPath;
         file_put_contents($tmpfile,"<?php return ".var_export($config,true).";?>",LOCK_EX);
         return ;
-    }
-
-    private static function _tmpDir(){
-        if ( !function_exists('sys_get_temp_dir')){
-            if (!empty($_ENV['TMP'])) { return realpath($_ENV['TMP']); }
-            if (!empty($_ENV['TMPDIR'])) { return realpath( $_ENV['TMPDIR']); }
-            if (!empty($_ENV['TEMP'])) { return realpath( $_ENV['TEMP']); }
-            $tempfile=tempnam(uniqid(rand(),TRUE),'');
-            if (is_file($tempfile)) {
-                unlink($tempfile);
-                return realpath(dirname($tempfile));
-            }
-        }
-        return sys_get_temp_dir();
     }
 
     /**
