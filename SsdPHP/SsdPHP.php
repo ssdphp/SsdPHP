@@ -50,16 +50,6 @@ class SsdPHP{
     /**
      * @var string
      */
-    private static $_rootpath="";
-
-    /**
-     * @var string
-     */
-    private static $appdir="App";
-
-    /**
-     * @var string
-     */
     private static $splitFlag="/";
 
     /**
@@ -75,10 +65,11 @@ class SsdPHP{
      * @var null
      */
     private static $_class=null;
+
     /**
-     * @var bool
+     * @var string
      */
-    private static $isComposer = true;
+    private static $appdir="App";
 
     // 类名映射
     private static $map = array();
@@ -90,21 +81,14 @@ class SsdPHP{
 
 
     /**
-     * @param bool $isComposer
+     * 注册自动加载
      */
-    public static function setIsComposer($isComposer=false)
-    {
-        self::$isComposer = $isComposer;
+    public static function registerAutoLoad(){
+        /*自动加载*/
+        spl_autoload_register('self::autoLoad');
+        self::registerComposerLoader();
+        return true;
     }
-
-    /**
-     * @return bool
-     */
-    public static function getIsComposer()
-    {
-        return self::$isComposer;
-    }
-
     /**
      * @return string
      */
@@ -249,6 +233,8 @@ class SsdPHP{
         self::$splitFlag = $splitFlag;
     }
 
+
+
     // 注册composer自动加载
     private static function registerComposerLoader()
     {
@@ -304,16 +290,8 @@ class SsdPHP{
             $GLOBALS['__composer_autoload_files'][$fileIdentifier] = true;
         }
     }
-    /*
-     * 引导回调
-     */
-    public static function Bootstrap($fun=Null){
-        self::registerAutoLoad();
-        if(is_callable($fun)){
-            call_user_func($fun);
-        }
-        return new SsdPHP();
-    }
+
+
 
     public static function setAppDir($path = ""){
         self::$appdir = $path;
@@ -323,19 +301,38 @@ class SsdPHP{
     }
 
 
-    public static function getRootPath(){
-        if(self::$_rootpath){
-            return self::$_rootpath;
+    /**
+     * 自动加载类
+     * @param $class
+     */
+    public static function autoLoad($class){
+
+        if(isset(self::$_class[$class])){
+            return true;
         }
-        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
-        return self::$_rootpath;
+        if( !$file = self::findFileInComposer($class) ){
+            if(!empty($class)){
+                $class = str_replace("\\",DIRECTORY_SEPARATOR,$class);
+            }
+            $file = self::getRootPath().$class.".php";
+        }
+
+        if(file_exists($file)) {
+            self::$_class[$class]=true;
+            require($file);
+        }
+        return ;
     }
-    public static function setRootPath($path=""){
-        if(!empty($path) && is_dir($path)){
-            self::$_rootpath = $path;
+
+    /**
+     * 引导回调
+     */
+    public static function Bootstrap($fun=Null){
+        self::registerAutoLoad();
+        if(is_callable($fun)){
+            call_user_func($fun);
         }
-        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
-        return self::$_rootpath;
+        return new SsdPHP();
     }
 
     /**运行
@@ -428,30 +425,21 @@ class SsdPHP{
         return false;
     }
 
-    /**
-     * 自动加载类
-     * @param $class
-     */
-    public static function autoLoad($class){
+    private static $_rootpath="";
 
-        if(isset(self::$_class[$class])){
-            return true;
+    public static function getRootPath(){
+        if(self::$_rootpath){
+            return self::$_rootpath;
         }
-        /* composer自动加载 */
-        if($file = self::findFileInComposer($class)){
-            require($file);
-            self::$_class[$class]=true;
-            return true;
+        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
+        return self::$_rootpath;
+    }
+    public static function setRootPath($path=""){
+        if(!empty($path) && is_dir($path)){
+            self::$_rootpath = $path;
         }
-        if(!empty($class)){
-            $class = str_replace("\\",DIRECTORY_SEPARATOR,$class);
-        }
-        $file = self::getRootPath().$class.".php";
-        if(file_exists($file)) {
-            self::$_class[$class]=true;
-            require($file);
-            return ;
-        }
+        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
+        return self::$_rootpath;
     }
 
     /**
