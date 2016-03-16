@@ -277,9 +277,9 @@ class SsdPHP{
     public static function addMap($class, $map = '')
     {
         if (is_array($class)) {
-            self::$_class = array_merge(self::$map, $class);
+            self::$map = array_merge(self::$map, $class);
         } else {
-            self::$_class[$class] = $map;
+            self::$map[$class] = $map;
         }
     }
 
@@ -452,7 +452,10 @@ class SsdPHP{
     {
         // PSR-4 lookup
         $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;
-
+        // class map lookup
+        if (isset(self::$map[$class])) {
+            return self::$map[$class];
+        }
         $first = $class[0];
         if (isset(self::$prefixLengthsPsr4[$first])) {
             foreach (self::$prefixLengthsPsr4[$first] as $prefix => $length) {
