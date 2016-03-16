@@ -50,6 +50,16 @@ class SsdPHP{
     /**
      * @var string
      */
+    private static $_rootpath="";
+
+    /**
+     * @var string
+     */
+    private static $appdir="App";
+
+    /**
+     * @var string
+     */
     private static $splitFlag="/";
 
     /**
@@ -61,7 +71,39 @@ class SsdPHP{
      * @var bool
      */
     private static $debug=true;
+    /**
+     * @var null
+     */
     private static $_class=null;
+    /**
+     * @var bool
+     */
+    private static $isComposer = true;
+
+    // 类名映射
+    private static $map = array();
+    // PSR-4
+    private static $prefixLengthsPsr4 = array();
+    private static $prefixDirsPsr4    = array();
+    // PSR-0
+    private static $prefixesPsr0 = [];
+
+
+    /**
+     * @param bool $isComposer
+     */
+    public static function setIsComposer($isComposer=false)
+    {
+        self::$isComposer = $isComposer;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function getIsComposer()
+    {
+        return self::$isComposer;
+    }
 
     /**
      * @return string
@@ -207,27 +249,6 @@ class SsdPHP{
         self::$splitFlag = $splitFlag;
     }
 
-    /**
-     * 注册自动加载
-     */
-    public static function registerAutoLoad(){
-
-        /*自动加载*/
-        spl_autoload_register('self::autoLoad');
-        self::registerComposerLoader();
-        return true;
-    }
-    // 类名映射
-    protected static $map = array();
-    // 加载列表
-    protected static $load = array();
-    // 命名空间
-    protected static $namespace = array();
-    // PSR-4
-    private static $prefixLengthsPsr4 = array();
-    private static $prefixDirsPsr4    = array();
-    // PSR-0
-    private static $prefixesPsr0 = [];
     // 注册composer自动加载
     private static function registerComposerLoader()
     {
@@ -294,13 +315,27 @@ class SsdPHP{
         return new SsdPHP();
     }
 
-    private static $appdir="App";
-
     public static function setAppDir($path = ""){
         self::$appdir = $path;
     }
     public static function getAppDir(){
         return self::$appdir;
+    }
+
+
+    public static function getRootPath(){
+        if(self::$_rootpath){
+            return self::$_rootpath;
+        }
+        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
+        return self::$_rootpath;
+    }
+    public static function setRootPath($path=""){
+        if(!empty($path) && is_dir($path)){
+            self::$_rootpath = $path;
+        }
+        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
+        return self::$_rootpath;
     }
 
     /**运行
@@ -391,23 +426,6 @@ class SsdPHP{
             echo "<!--ERROR:{$e->getMessage()}-->";
         }
         return false;
-    }
-
-    private static $_rootpath="";
-
-    public static function getRootPath(){
-        if(self::$_rootpath){
-            return self::$_rootpath;
-        }
-        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
-        return self::$_rootpath;
-    }
-    public static function setRootPath($path=""){
-        if(!empty($path) && is_dir($path)){
-            self::$_rootpath = $path;
-        }
-        self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
-        return self::$_rootpath;
     }
 
     /**
