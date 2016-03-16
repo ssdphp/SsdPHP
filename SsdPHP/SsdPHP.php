@@ -60,7 +60,7 @@ class SsdPHP{
     /**
      * @var bool
      */
-    private static $debug=true;
+    private static $debug=false;
     /**
      * @var null
      */
