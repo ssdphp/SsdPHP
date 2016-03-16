@@ -1,5 +1,6 @@
 <?php
 /* php version >= 5.3.6 */
+$start = microtime(true);
 if(!class_exists('\SsdPHP\SsdPHP'))
     require(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."SsdPHP".DIRECTORY_SEPARATOR."SsdPHP.php");
 use SsdPHP\Pulgins\Common\RegShutdownEvent,
@@ -8,14 +9,13 @@ use SsdPHP\Pulgins\Common\RegShutdownEvent,
     SsdPHP\Core\Config,
     SsdPHP\SsdPHP;
 if(($r = SsdPHP::Bootstrap(function (){
-
     date_default_timezone_set('PRC');
     RegShutdownEvent::register();
-    #SsdPHP::setDebug(false);
-    #SsdPHP::setAppDir("");
+    SsdPHP::setDebug();
+    #SsdPHP::setAppDir("./App");
     Error::$CONSOLE =SsdPHP::isDebug();
     Config::load(SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
-    Route::set(Config::getField('ROUTE','home'));
+    Route::set(Config::getField('ROUTE','home',array()));
 
 })->Run()) === false){
     header('HTTP/1.1 404 Not Found');
@@ -24,3 +24,5 @@ if(($r = SsdPHP::Bootstrap(function (){
 }else{
     echo $r;
 }
+$end = microtime(true);
+echo "<!--","SsdPHP","Framwork runtime=",($end - $start),"秒","-->";
