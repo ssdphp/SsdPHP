@@ -2,6 +2,8 @@
 
 namespace SsdPHP\Pulgins\View\Adaptor;
 
+use SsdPHP\SsdPHP;
+
 class Smarty
 {
 
@@ -24,6 +26,31 @@ class Smarty
             self::$config = array_merge(self::$config,$config);
         }
         self::$Smarty = new \Smarty();
+        self::$Smarty->setTemplateDir(self::$config['template_dir']);
+        self::$Smarty->setCompileDir(self::$config['templates_c']);
+        self::$Smarty->setCacheDir(self::$config['templates_config']);
+        self::$Smarty->getPluginsDir(self::$config['templates_plugins']);
+        self::$Smarty->force_compile  = self::$config['force_compile'];
+        self::$Smarty->debugging      = self::$config['debugging'];
+        self::$Smarty->caching        = self::$config['caching'];
+        self::$Smarty->cache_lifetime = self::$config['cache_lifetime'];
+    }
+
+    /**
+     * displays a Smarty template
+     *
+     * @param string $template   the resource handle of the template file or template object
+     * @param mixed  $cache_id   cache id to be used with this template
+     * @param mixed  $compile_id compile id to be used with this template
+     * @param object $parent     next higher level of Smarty variables
+     */
+    public function display($template = null, $cache_id = null, $compile_id = null, $parent = null)
+    {
+        if(empty($template)){
+            $template=SsdPHP::getAction()."/".SsdPHP::getController();
+        }
+        // display template
+        self::$Smarty->display($template.self::$config['tpl_suffix'], $cache_id, $compile_id, $parent, 1);
     }
 
     /**
@@ -57,17 +84,11 @@ class Smarty
     /**
      * render a .tpl
      */
-    public function render($tpl){
-
-        self::$Smarty->setTemplateDir(self::$config['template_dir']);
-        self::$Smarty->setCompileDir(self::$config['templates_c']);
-        self::$Smarty->setCacheDir(self::$config['templates_config']);
-        self::$Smarty->getPluginsDir(self::$config['templates_plugins']);
-        self::$Smarty->force_compile  = self::$config['force_compile'];
-        self::$Smarty->debugging      = self::$config['debugging'];
-        self::$Smarty->caching        = self::$config['caching'];
-        self::$Smarty->cache_lifetime = self::$config['cache_lifetime'];
-        return self::$Smarty->fetch("$tpl");
+    public function render($tpl=''){
+        if($tpl==''){
+            $tpl=SsdPHP::getAction()."/".SsdPHP::getController();
+        }
+        return self::$Smarty->fetch($tpl.self::$config['tpl_suffix']);
 
     }
 
