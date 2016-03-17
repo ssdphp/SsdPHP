@@ -17,6 +17,7 @@ class Smarty
         'debugging'=>true,
         'caching'=>true,
         'cache_lifetime'=>120,
+        'tpl_suffix'=>".html",
     );
     public static $Smarty = null;
 
