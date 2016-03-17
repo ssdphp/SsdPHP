@@ -24,9 +24,10 @@ class Factory
                 'templates_config'=>$templates_config,
                 'templates_plugins'=>$templates_plugins,
                 'force_compile'=>true,
-                'debugging'=>true,
+                'debugging'=>false,
                 'caching'=>true,
                 'cache_lifetime'=>120,
+                'tpl_suffix'=>".html",
             ));
         }
         return SFactory::getInstance($className, $config);
