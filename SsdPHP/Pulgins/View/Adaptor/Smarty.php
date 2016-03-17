@@ -26,6 +26,13 @@ class Smarty
         self::$Smarty = new \Smarty();
     }
 
+    /**
+     * 引导在smarty
+     * @author  xiaohuihui  <xzh_tx@163.com>
+     * @param $name
+     * @param $arguments
+     * @return $this
+     */
     public function __call($name, $arguments)
     {
         $count = count($arguments);
