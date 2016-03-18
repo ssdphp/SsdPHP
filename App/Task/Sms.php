@@ -15,7 +15,7 @@ class Sms{
         $SMS_PWD            = SConfig::getField('SMS','SMS_PWD');
         $SMS_CHARSET        = SConfig::getField('SMS','SMS_CHARSET',"GBK");
         $SMS_SEND_ONE_URL=preg_replace(
-            array('/\{\$SMS_ACCOUNT\}/','/\{\$Pwd\}/','/\{\$Mobile\}/','/\{\$Content\}/'),
+            array('/\{\$SMS_ACCOUNT\}/','/\{\$SMS_PWD\}/','/\{\$toPhone\}/','/\{\$Content\}/'),
             array($SMS_ACCOUNT,$SMS_PWD,$toPhone,iconv('UTF-8', $SMS_CHARSET, $Content)),
             $SMS_SEND_ONE_URL
         );
@@ -30,7 +30,7 @@ class Sms{
             'status' => $result,
             'time' => time(),
             'content' => $Content,
-            'type' => SConfig::getField('SMS','SMS_TYPE'),
+            'type' => SConfig::getField('SMS','SMS_TYPE',1),
         );
         if(is_callable($callback)){
             call_user_func_array($callback,array("data"=>$callbackData));
@@ -38,6 +38,9 @@ class Sms{
         return ;
     }
 
+    public static function callback($data){
+        // todo
+    }
 
 
 }
