@@ -6,7 +6,7 @@ use SsdPHP\Core\Config as SConfig;
 class Sms{
 
 
-    public static function sendTextMessage($toPhone,$Content="",$callback=null,array $config){
+    public static function sendTextMessage($toPhone,$Content="",$callback=null){
         //短信URL
         $SMS_SEND_ONE_URL   = SConfig::getField('SMS','SMS_SEND_ONE_URL',"http://mb345.com:999/ws/batchSend.aspx?CorpID={\$SMS_ACCOUNT}&Pwd={\$SMS_PWD}&Mobile={$toPhone}&Cell=&SendTime=&Content={$Content}");
         //短信帐号
