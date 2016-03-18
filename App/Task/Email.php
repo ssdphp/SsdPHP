@@ -14,13 +14,21 @@ class Email{
      * @param $title
      * @param $body
      */
-    public static function taskEmail($toEmail,$toUser,$title,$body){
+    public static function sendEmail($toEmail,$toUser,$title,$content,$callback=null){
         if(!$toEmail || !$title){
             return ;
         }
-        EmailFactory::getInstance()->send_mail($toEmail,$toUser,$title,$body);
+        $result = EmailFactory::getInstance()->send_mail($toEmail,$toUser,$title,$content);
+        $callbackData = array(
+            'email' => $toEmail,
+            'status' => (int)$result,
+            'time' => time(),
+            'content' => $content,
+            'type' => SConfig::getField('Email','EmailType'),
+        );
+        if(is_callable($callback)){
+            call_user_func_array($callback,array("data"=>$callbackData));
+        }
     }
-
-
 
 }
