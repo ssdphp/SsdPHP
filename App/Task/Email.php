@@ -2,6 +2,7 @@
 namespace App\Task;
 
 use SsdPHP\Pulgins\Email\Factory as EmailFactory;
+use SsdPHP\Core\Config as SConfig;
 
 class Email{
 
@@ -24,11 +25,15 @@ class Email{
             'status' => (int)$result,
             'time' => time(),
             'content' => $content,
-            'type' => SConfig::getField('Email','EmailType'),
+            'type' => SConfig::getField('Email','Main')['EmailType'],
         );
         if(is_callable($callback)){
             call_user_func_array($callback,array("data"=>$callbackData));
         }
+    }
+
+    public static function callback($data){
+        // todo
     }
 
 }
