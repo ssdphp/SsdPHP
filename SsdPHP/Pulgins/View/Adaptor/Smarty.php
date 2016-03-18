@@ -35,6 +35,7 @@ class Smarty
         self::$Smarty->debugging      = self::$config['debugging'];
         self::$Smarty->caching        = self::$config['caching'];
         self::$Smarty->cache_lifetime = self::$config['cache_lifetime'];
+
     }
 
     /**
