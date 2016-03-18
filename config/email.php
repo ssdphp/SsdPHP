@@ -21,13 +21,15 @@ return array(
             //SMTP servers
             'Host'=>"smtp.mxhichina.com",
             //SMTP username  注意：普通邮件认证不需要加 @域名
-            'Username'=>"postmaster@bynxl.com",
+            'Username'=>"postmaster@xxxx.com",
             //SMTP password
-            'Password'=>"xxxx",
+            'Password'=>"xxxxx",
             //发件人邮箱
             'From'=>"postmaster@bynxl.com",
             //发件人昵称
             'FromName'=>"www.ssdphp.com",
+            //发送邮件类型，如，找回密码，账号注册等等
+            'EmailType'=>"1",
         ),
     )
 );
