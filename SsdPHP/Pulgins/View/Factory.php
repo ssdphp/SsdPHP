@@ -28,9 +28,9 @@ class Factory
                 'caching'=>true,
                 'cache_lifetime'=>120,
                 'tpl_suffix'=>".html",
-                'Adaptor'=>"Tpl",
+                #'Adaptor'=>"Tpl",
             ));
-            if($config['Adaptor'])
+            if(!empty($config['Adaptor']))
                 $adapter=$config['Adaptor'];
         }
         $className = __NAMESPACE__ . "\\Adaptor\\{$adapter}";
