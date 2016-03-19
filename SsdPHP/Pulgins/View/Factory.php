@@ -8,7 +8,7 @@ use SsdPHP\Core\Factory as SFactory,
 class Factory
 {
 
-    public static function getInstance($adapter = 'Smarty', $config = null)
+    public static function getInstance($adapter = 'Smarty', $config = array())
     {
 
         if(empty($config)){
@@ -18,20 +18,15 @@ class Factory
             $template_dir= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates";
             $templates_config= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates_config";
             $templates_plugins= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates_plugins";
-            $config = SConfig::get($adapter,array(
+            $config = SConfig::get("View");
+            if(!empty($config['Adaptor']))
+                $adapter=$config['Adaptor'];
+            $config = array_merge($config,array(
                 'templates_c'=>$templates_c,
                 'template_dir'=>$template_dir,
                 'templates_config'=>$templates_config,
                 'templates_plugins'=>$templates_plugins,
-                'force_compile'=>true,
-                'debugging'=>false,
-                'caching'=>true,
-                'cache_lifetime'=>120,
-                'tpl_suffix'=>".html",
-                'Adaptor'=>"Tpl",
             ));
-            if(!empty($config['Adaptor']))
-                $adapter=$config['Adaptor'];
         }
         $className = __NAMESPACE__ . "\\Adaptor\\{$adapter}";
         return SFactory::getInstance($className, $config);
