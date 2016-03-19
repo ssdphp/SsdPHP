@@ -11,8 +11,8 @@ use SsdPHP\Pulgins\Common\RegShutdownEvent,
 if(($r = SsdPHP::Bootstrap(function (){
     date_default_timezone_set('PRC');
     RegShutdownEvent::register();
-    SsdPHP::setDebug();
-    #SsdPHP::setAppDir("./App");
+    #SsdPHP::setAppDir("App");
+    #SsdPHP::setDebug();
     Error::$CONSOLE =SsdPHP::isDebug();
     Config::load(SsdPHP::getRootPath().DIRECTORY_SEPARATOR.'config');
     Route::set(Config::getField('ROUTE','home',array()));
