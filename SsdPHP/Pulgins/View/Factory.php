@@ -10,7 +10,7 @@ class Factory
 
     public static function getInstance($adapter = 'Smarty', $config = null)
     {
-        $className = __NAMESPACE__ . "\\Adaptor\\{$adapter}";
+
         if(empty($config)){
             $appdir = SsdPHP::getRootPath().SsdPHP::getAppDir();
             $model = SsdPHP::getModel();
@@ -28,8 +28,12 @@ class Factory
                 'caching'=>true,
                 'cache_lifetime'=>120,
                 'tpl_suffix'=>".html",
+                'Adaptor'=>"Tpl",
             ));
+            if($config['Adaptor'])
+                $adapter=$config['Adaptor'];
         }
+        $className = __NAMESPACE__ . "\\Adaptor\\{$adapter}";
         return SFactory::getInstance($className, $config);
     }
 
