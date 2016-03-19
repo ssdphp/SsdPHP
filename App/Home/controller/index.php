@@ -14,21 +14,22 @@ class index{
 
     public function __construct()
     {
-        Session::Start();
+        //Session::Start();
     }
 
     public function index(){
-        #$res = MysqlFactory::getInstance()->select("ip");
-        #CacheFactory::getInstance()->set("ip",50);
+        //数据库操作
+        //$res = MysqlFactory::getInstance()->select("ip");
+        //CacheFactory::getInstance()->set("ip",50);
         //RegShutdownEvent::add('\App\Task\Email::sendEmail','xzh_tx@163.com','xhh','test','body','\App\Task\Email::callback');
-        RegShutdownEvent::add('\App\Task\Sms::sendTextMessage','1888xxxxxxx','你的验证码是xxx','\App\Task\Sms::callback');
+        //RegShutdownEvent::add('\App\Task\Sms::sendTextMessage','1888xxxxxxx','你的验证码是xxx','\App\Task\Sms::callback');
         /*echo Input::get("ni",0,"intval");
         Session::set('nihao',123);
         echo Session::get('nihao');*/
         // 创建日志频道
         //$a = new Db();
         //$a->test();
-        echo 123,Input::get("ni",0,"intval");
+        echo 123;
         #View::getInstance()->assign(array('a'=>"ni","b"=>"<br>123"))->display();
     }
 
