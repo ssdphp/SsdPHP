@@ -12,12 +12,12 @@ class Factory
     {
 
         if(empty($config)){
-            $appdir = SsdPHP::getRootPath().SsdPHP::getAppDir();
+            $appdir = realpath(SsdPHP::getRootPath().SsdPHP::getAppDir());
             $model = SsdPHP::getModel();
-            $templates_c = $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates_c";
-            $template_dir= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates";
-            $templates_config= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates_config";
-            $templates_plugins= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates_plugins";
+            $templates_c = $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates_c/";
+            $template_dir= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates/";
+            $templates_config= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates_config/";
+            $templates_plugins= $appdir.DIRECTORY_SEPARATOR.$model.DIRECTORY_SEPARATOR."templates_plugins/";
             $config = SConfig::get("View");
             if(!empty($config['Adaptor']))
                 $adapter=$config['Adaptor'];
