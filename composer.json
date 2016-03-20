@@ -1,7 +1,23 @@
 {
+    "name": "ssdphp/ssdphp",
+    "description": "SsdPHP is a fast, simple, extensible framework for PHP. SsdPHP enables you to quickly and easily build RESTful web applications.",
+    "homepage": "http://www.ssdphp.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "xhh",
+            "email": "xzh_tx@163.com",
+            "homepage": "http://www.ssdphp.com/",
+            "role": "Original Developer"
+        }
+    ],
     "require": {
-        "smarty/smarty": "3.1.*"
+        "php": ">=5.3.7"
+    },
+    "autoload": {
+        "files": [ "SsdPHP/autoload.php", "SsdPHP/SsdPHP.php" ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.6"
     }
-	
 }
-
