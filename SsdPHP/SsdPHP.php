@@ -70,23 +70,12 @@ class SsdPHP{
      * @var string
      */
     private static $appdir="App";
-
-    // 类名映射
-    private static $map = array();
-    // PSR-4
-    private static $prefixLengthsPsr4 = array();
-    private static $prefixDirsPsr4    = array();
-    // PSR-0
-    private static $prefixesPsr0 = [];
-
-
     /**
      * 注册自动加载
      */
     public static function registerAutoLoad(){
         /*自动加载*/
         spl_autoload_register('self::autoLoad');
-        self::registerComposerLoader();
         return true;
     }
     /**
@@ -233,69 +222,16 @@ class SsdPHP{
         self::$splitFlag = $splitFlag;
     }
 
-
-
-    // 注册composer自动加载
-    private static function registerComposerLoader()
-    {
-
-        if (is_file(self::getRootPath() . 'vendor/composer/autoload_namespaces.php')) {
-            $map = require self::getRootPath() . 'vendor/composer/autoload_namespaces.php';
-            foreach ($map as $namespace => $path) {
-                self::$prefixesPsr0[$namespace[0]][$namespace] = (array) $path;
-            }
-        }
-
-        if (is_file(self::getRootPath() . 'vendor/composer/autoload_psr4.php')) {
-            $map = require self::getRootPath() . 'vendor/composer/autoload_psr4.php';
-            foreach ($map as $namespace => $path) {
-                $length = strlen($namespace);
-                if ('\\' !== $namespace[$length - 1]) {
-                    throw new \InvalidArgumentException("A non-empty PSR-4 prefix must end with a namespace separator.");
-                }
-                self::$prefixLengthsPsr4[$namespace[0]][$namespace] = $length;
-                self::$prefixDirsPsr4[$namespace]                   = (array) $path;
-            }
-        }
-
-        if (is_file(self::getRootPath() . 'vendor/composer/autoload_classmap.php')) {
-            $classMap = require self::getRootPath() . 'vendor/composer/autoload_classmap.php';
-            if ($classMap) {
-                self::addMap($classMap);
-            }
-        }
-
-        if (is_file( self::getRootPath() . 'vendor/composer/autoload_files.php')) {
-            $includeFiles = require self::getRootPath() . 'vendor/composer/autoload_files.php';
-            foreach ($includeFiles as $fileIdentifier => $file) {
-                self::composerRequire($fileIdentifier, $file);
-            }
-        }
-    }
-
-    // 注册classmap
-    public static function addMap($class, $map = '')
-    {
-        if (is_array($class)) {
-            self::$map = array_merge(self::$map, $class);
-        } else {
-            self::$map[$class] = $map;
-        }
-    }
-
-    private static function composerRequire($fileIdentifier, $file)
-    {
-        if (empty($GLOBALS['__composer_autoload_files'][$fileIdentifier])) {
-            require $file;
-            $GLOBALS['__composer_autoload_files'][$fileIdentifier] = true;
-        }
-    }
-
-
-
+    /**
+     * @param string $path
+     */
     public static function setAppDir($path = ""){
         self::$appdir = $path;
     }
+
+    /**
+     * @return string
+     */
     public static function getAppDir(){
         return self::$appdir;
     }
@@ -310,13 +246,10 @@ class SsdPHP{
         if(isset(self::$_class[$class])){
             return true;
         }
-        if( !$file = self::findFileInComposer($class) ){
-            if(!empty($class)){
-                $class = str_replace("\\",DIRECTORY_SEPARATOR,$class);
-            }
-            $file = self::getRootPath().$class.".php";
+        if(!empty($class)){
+            $class = str_replace("\\",DIRECTORY_SEPARATOR,$class);
         }
-
+        $file = self::getRootPath().$class.".php";
         if(file_exists($file)) {
             self::$_class[$class]=true;
             require($file);
@@ -427,6 +360,10 @@ class SsdPHP{
 
     private static $_rootpath="";
 
+    /**
+     * composer没有的文件，将在rootpath自动加载
+     * @return string
+     */
     public static function getRootPath(){
         if(self::$_rootpath){
             return self::$_rootpath;
@@ -434,62 +371,16 @@ class SsdPHP{
         self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
         return self::$_rootpath;
     }
+
+    /**
+     * @param string $path
+     * @return string
+     */
     public static function setRootPath($path=""){
         if(!empty($path) && is_dir($path)){
             self::$_rootpath = $path;
         }
         self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
         return self::$_rootpath;
-    }
-
-    /**
-     * 查找Composer
-     * @param $class
-     * @param string $ext
-     * @return bool|string
-     */
-    private static function findFileInComposer($class, $ext = '.php')
-    {
-        // PSR-4 lookup
-        $logicalPathPsr4 = strtr($class, '\\', DIRECTORY_SEPARATOR) . $ext;
-        // class map lookup
-        if (isset(self::$map[$class])) {
-            return self::$map[$class];
-        }
-        $first = $class[0];
-        if (isset(self::$prefixLengthsPsr4[$first])) {
-            foreach (self::$prefixLengthsPsr4[$first] as $prefix => $length) {
-                if (0 === strpos($class, $prefix)) {
-                    foreach (self::$prefixDirsPsr4[$prefix] as $dir) {
-                        if (file_exists($file = $dir . DIRECTORY_SEPARATOR . substr($logicalPathPsr4, $length))) {
-                            return $file;
-                        }
-                    }
-                }
-            }
-        }
-        // PSR-0 lookup
-        if (false !== $pos = strrpos($class, '\\')) {
-            // namespaced class name
-            $logicalPathPsr0 = substr($logicalPathPsr4, 0, $pos + 1)
-                . strtr(substr($logicalPathPsr4, $pos + 1), '_', DIRECTORY_SEPARATOR);
-        } else {
-            // PEAR-like class name
-            $logicalPathPsr0 = strtr($class, '_', DIRECTORY_SEPARATOR) . $ext;
-        }
-
-        if (isset(self::$prefixesPsr0[$first])) {
-            foreach (self::$prefixesPsr0[$first] as $prefix => $dirs) {
-                if (0 === strpos($class, $prefix)) {
-                    foreach ($dirs as $dir) {
-                        if (file_exists($file = $dir . DIRECTORY_SEPARATOR . $logicalPathPsr0)) {
-                            return $file;
-                        }
-                    }
-                }
-            }
-        }
-        // Remember that this class does not exist.
-        return self::$map[$class] = false;
     }
 }
