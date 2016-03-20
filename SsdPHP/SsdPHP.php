@@ -70,14 +70,7 @@ class SsdPHP{
      * @var string
      */
     private static $appdir="App";
-    /**
-     * 注册自动加载
-     */
-    public static function registerAutoLoad(){
-        /*自动加载*/
-        spl_autoload_register('self::autoLoad');
-        return true;
-    }
+
     /**
      * @return string
      */
@@ -261,7 +254,8 @@ class SsdPHP{
      * 引导回调
      */
     public static function Bootstrap($fun=Null){
-        self::registerAutoLoad();
+        //自动加载
+        spl_autoload_register('self::autoLoad');
         if(is_callable($fun)){
             call_user_func($fun);
         }
@@ -320,7 +314,6 @@ class SsdPHP{
                     preg_replace_callback('/(\w+)\/([^\/]+)/', function($match) use(&$var){$var[$match[1]]=strip_tags($match[2]);}, implode(self::getSplitFlag(),$url_param));
                     $_GET   =  array_merge($var,$_GET);
                 }
-                $_REQUEST = array_merge($_POST,$_GET);
                 /* }}} end url参数处理 */
 
                 //主方调用
