@@ -2,6 +2,7 @@
 
 namespace  App\Home\model;
 
+use SsdPHP\Core\Factory as SFactory;
 
 class Student{
 
@@ -10,7 +11,8 @@ class Student{
         if(empty($account) || empty($pwd)){
             return -1;
         }
-        
 
+        $s = SFactory::getInstance('SsdPHP\Pulgins\DataBase\Factory',"ip")->select();
+        return $s;
     }
 }
