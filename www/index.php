@@ -1,5 +1,6 @@
 <?php
 /* php version >= 5.3.6 */
+
 $start = microtime(true);
 if(!class_exists('\SsdPHP\SsdPHP'))
     require(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."SsdPHP".DIRECTORY_SEPARATOR."SsdPHP.php");
