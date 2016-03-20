@@ -29,8 +29,8 @@ class index{
         // 创建日志频道
         //$a = new Db();
         //$a->test();
-        echo 123;
-        #View::getInstance()->assign(array('a'=>"ni","b"=>"<br>123"))->display();
+        #echo 123;
+        View::getInstance()->assign(array('a'=>"ni","b"=>"<br>123"))->display();
     }
 
 

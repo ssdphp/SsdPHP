@@ -1,3 +1,10 @@
 vendor
-/config/*.php
-/config
+/config/config.php
+/config/email.php
+/config/mysql.php
+/config/redis.php
+/config/route.php
+/config/session.php
+/config/swoole.php
+/config/sms.php
+/config/view.php
