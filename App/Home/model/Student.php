@@ -12,7 +12,7 @@ class Student{
             return -1;
         }
 
-        $s = SFactory::getInstance('SsdPHP\Pulgins\DataBase\Factory',"ip")->select();
+        $s = SFactory::getInstance('SsdPHP\Pulgins\DataBase\Factory',"ip")->selectOne();
         return $s;
     }
 }
