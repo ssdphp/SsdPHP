@@ -14,7 +14,7 @@
 +-----------------------------------------------------------------------+
 }}}*/
 
-namespace pulgins;
+namespace SsdPHP\Pulgins\Hleper;
 
 class Spell
 {
