@@ -1,4 +1,4 @@
-vendor
+
 /config/config.php
 /config/email.php
 /config/mysql.php
