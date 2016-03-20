@@ -2,9 +2,9 @@
 /* php version >= 5.3.6 */
 
 $start = microtime(true);
-
+$rootpath = "";
 if(is_file(__DIR__.'/../../../../vendor/autoload.php')){
-    require __DIR__.'/../../../../vendor/autoload.php';
+    require $rootpath = __DIR__.'/../../../../vendor/autoload.php';
 }elseif (!class_exists('\SsdPHP\SsdPHP')){
     require(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."SsdPHP".DIRECTORY_SEPARATOR."SsdPHP.php");
 }
@@ -13,10 +13,10 @@ use SsdPHP\Pulgins\Common\RegShutdownEvent,
     SsdPHP\Pulgins\Common\Error,
     SsdPHP\Core\Config,
     SsdPHP\SsdPHP;
+SsdPHP::setRootPath($rootpath);
 if(($r = SsdPHP::Bootstrap(function (){
     date_default_timezone_set('PRC');
     RegShutdownEvent::register();
-    SsdPHP::setRootPath(__DIR__.'/../../../../');
     #SsdPHP::setAppDir("App");
     SsdPHP::setDebug();
     Error::$CONSOLE =SsdPHP::isDebug();
