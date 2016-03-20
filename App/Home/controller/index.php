@@ -5,7 +5,7 @@ use SsdPHP\Pulgins\DataBase\Factory as MysqlFactory,
     SsdPHP\Pulgins\Cache\Factory as CacheFactory,
     SsdPHP\Pulgins\Common\RegShutdownEvent,
     SsdPHP\Pulgins\Http\Input,
-    App\Home\model\Db,
+    SsdPHP\Core\Factory as SFactory,
     SsdPHP\Pulgins\View\Factory as View,
     SsdPHP\Pulgins\Session\Factory as Session,
     SsdPHP\Pulgins\Email\Factory as EmailFactory;
@@ -29,7 +29,8 @@ class index{
         // 创建日志频道
         //$a = new Db();
         //$a->test();
-        echo 123;
+        $s = SFactory::getInstance('App\Home\model\Student')->Login("a","b");
+        print_r($s);
         #View::getInstance()->assign(array('a'=>"ni","b"=>"<br>123"))->display();
     }
 
