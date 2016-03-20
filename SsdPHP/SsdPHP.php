@@ -322,13 +322,7 @@ class SsdPHP{
                 }
                 $_REQUEST = array_merge($_POST,$_GET);
                 /* }}} end url参数处理 */
-                // 前置调用
-                if($class->hasMethod('_before_'.self::$action)) {
-                    $before =   $class->getMethod('_before_'.self::$action);
-                    if($before->isPublic()) {
-                        $before->invoke($classInstance);
-                    }
-                }
+
                 //主方调用
                 if($method->getNumberOfParameters()>0){
                     $params =  $method->getParameters();
@@ -339,14 +333,6 @@ class SsdPHP{
                     $r = $method->invokeArgs($classInstance,$p);
                 }else{
                     $r = $method->invoke($classInstance);
-                }
-
-                // 后置调用
-                if($class->hasMethod('_after_'.self::$action)) {
-                    $before =   $class->getMethod('_after_'.self::$action);
-                    if($before->isPublic()) {
-                        $before->invoke($classInstance);
-                    }
                 }
                 return $r;
             }else{
