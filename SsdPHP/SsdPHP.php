@@ -379,6 +379,7 @@ class SsdPHP{
     public static function setRootPath($path=""){
         if(!empty($path) && is_dir($path)){
             self::$_rootpath = $path;
+            return true;
         }
         self::$_rootpath = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR;
         return self::$_rootpath;
