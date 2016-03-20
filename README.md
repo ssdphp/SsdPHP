@@ -1,22 +1,12 @@
+<pre>
+参考SlightPHP Thinkphp zphp 设计思路
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>谢谢你访问访问www.ssdphp.com</title>
-    <style>
-        a{  text-decoration:none;  }  a:hover{  text-decoration:underline;  }
-    </style>
-</head>
-<body>
-<b>参考SlightPHP Thinkphp zphp 设计思路</b>
 <ul>
     <li>1.composer require "ssdphp/ssdphp:dev-master"</li>
     <li>2.mv App to rootpath</li>
     <li>3.mv config to rootpath</li>
 </ul>
-<br>
-<pre>
+
 <h2>nginx配置</h2>
 server {
 	listen       80;
