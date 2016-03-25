@@ -55,7 +55,7 @@ server {
                 +...
             +www
 <h2>Cli</h2>
-    php /mnt/hgfs/www/cqzkjz.com/vendor/ssdphp/ssdphp/www/index.php /home/index/index
+    php /mnt/hgfs/www/ssdphp.com/vendor/ssdphp/ssdphp/www/index.php /home/index/index
 
 </pre>
 </body>
