@@ -30,7 +30,7 @@ class Factory
         if(empty($config)){
             $config = SConfig::getField("Mysql","Main");
         }
-        if($config['prefix'])
+        if(!empty($config['prefix']))
             self::$prefix = $config['prefix'];
 
         $className = __NAMESPACE__ . "\\Adaptor\\{$adapter}";
