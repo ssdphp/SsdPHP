@@ -9,6 +9,7 @@ class Factory
 {
 
     private static $table = "";
+    private static $prefix = "";
     private static $_instance = null;
 
     public function __construct($table="")
@@ -29,6 +30,9 @@ class Factory
         if(empty($config)){
             $config = SConfig::getField("Mysql","Main");
         }
+        if($config['prefix'])
+            self::$prefix = $config['prefix'];
+
         $className = __NAMESPACE__ . "\\Adaptor\\{$adapter}";
         self::$_instance = SFactory::getInstance($className, $config);
     }
@@ -53,7 +57,7 @@ class Factory
     public function __call($name, $arguments)
     {
         $count = count($arguments);
-        $arguments[0] = self::$table;
+        $arguments[0] = self::$prefix.self::$table;
         switch($count){
 
             case 0:
