@@ -239,10 +239,7 @@ class SsdPHP{
         if(isset(self::$_class[$class])){
             return true;
         }
-        if(!empty($class)){
-            $class = str_replace("\\",DIRECTORY_SEPARATOR,$class);
-        }
-        $file = self::getRootPath().$class.".php";
+        $file = self::getRootPath().str_replace("\\",DIRECTORY_SEPARATOR,$class).".php";
         if(file_exists($file)) {
             self::$_class[$class]=true;
             require($file);

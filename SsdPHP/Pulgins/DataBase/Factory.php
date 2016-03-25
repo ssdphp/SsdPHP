@@ -9,7 +9,11 @@ class Factory
 {
 
     private static $table = "";
+    private static $prefix = "";
     private static $_instance = null;
+
+    private static $read_array = array("select","selectone","Main");//写主
+    private static $write_array = array("insert","update","delete","Slave");//读从
 
     public function __construct($table="")
     {
@@ -18,7 +22,6 @@ class Factory
         }else{
             self::$table = $table;
         }
-        self::getInstance();
     }
 
     public static function getInstance($adapter = 'Mysql', $config = null)
@@ -29,6 +32,9 @@ class Factory
         if(empty($config)){
             $config = SConfig::getField("Mysql","Main");
         }
+        if(!empty($config['prefix']))
+            self::$prefix = $config['prefix'];
+
         $className = __NAMESPACE__ . "\\Adaptor\\{$adapter}";
         self::$_instance = SFactory::getInstance($className, $config);
     }
@@ -52,18 +58,26 @@ class Factory
 
     public function __call($name, $arguments)
     {
+
+        $name = strtolower($name);
+        if(in_array($name,self::$read_array)){
+            self::getInstance('Mysql',$config = SConfig::getField("Mysql","Slave"));
+        }elseif (in_array($name,self::$write_array)){
+            self::getInstance('Mysql',$config = SConfig::getField("Mysql","Main"));
+        }
         $count = count($arguments);
-        $arguments[0] = self::$table;
+        $arguments[0] = self::$prefix.self::$table;
+        
         switch($count){
 
             case 0:
                 $res = self::$_instance->$name($arguments[0]);
                 break;
-            case 3:
-                $res = self::$_instance->$name($arguments[0],$arguments[1],$arguments[2]);
-                break;
             case 2:
                 $res = self::$_instance->$name($arguments[0],$arguments[1]);
+                break;
+            case 3:
+                $res = self::$_instance->$name($arguments[0],$arguments[1],$arguments[2]);
                 break;
             case 4:
                 $res = self::$_instance->$name($arguments[0],$arguments[1],$arguments[2],$arguments[3]);

@@ -32,4 +32,4 @@ if(($r = SsdPHP::Bootstrap(function (){
     echo $r;
 }
 $end = microtime(true);
-echo "<!--","SsdPHP","Framwork runtime=",($end - $start),"秒","-->";
+echo SsdPHP::isDebug() ? ("<!--"."SsdPHP"."Framwork runtime=".($end - $start)."秒"."-->") :"";
