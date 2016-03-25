@@ -12,6 +12,9 @@ class Factory
     private static $prefix = "";
     private static $_instance = null;
 
+    private static $read_array = array("select","selectone","Main");//写主
+    private static $write_array = array("insert","update","delete","Slave");//读从
+
     public function __construct($table="")
     {
         if($table == ""){
@@ -19,7 +22,6 @@ class Factory
         }else{
             self::$table = $table;
         }
-        self::getInstance();
     }
 
     public static function getInstance($adapter = 'Mysql', $config = null)
@@ -56,8 +58,16 @@ class Factory
 
     public function __call($name, $arguments)
     {
+
+        $name = strtolower($name);
+        if(in_array($name,self::$read_array)){
+            self::getInstance('Mysql',$config = SConfig::getField("Mysql","Slave"));
+        }elseif (in_array($name,self::$write_array)){
+            self::getInstance('Mysql',$config = SConfig::getField("Mysql","Main"));
+        }
         $count = count($arguments);
         $arguments[0] = self::$prefix.self::$table;
+        
         switch($count){
 
             case 0:
