@@ -63,11 +63,11 @@ class Factory
             case 0:
                 $res = self::$_instance->$name($arguments[0]);
                 break;
-            case 3:
-                $res = self::$_instance->$name($arguments[0],$arguments[1],$arguments[2]);
-                break;
             case 2:
                 $res = self::$_instance->$name($arguments[0],$arguments[1]);
+                break;
+            case 3:
+                $res = self::$_instance->$name($arguments[0],$arguments[1],$arguments[2]);
                 break;
             case 4:
                 $res = self::$_instance->$name($arguments[0],$arguments[1],$arguments[2],$arguments[3]);
