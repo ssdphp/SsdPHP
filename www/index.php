@@ -9,9 +9,9 @@ if(is_file(__DIR__.'/../../../../vendor/autoload.php')){
 }elseif (!class_exists('\SsdPHP\SsdPHP')){
     require(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."SsdPHP".DIRECTORY_SEPARATOR."SsdPHP.php");
 }
-use SsdPHP\Pulgins\Common\RegShutdownEvent,
-    SsdPHP\Pulgins\Common\Route,
-    SsdPHP\Pulgins\Common\Error,
+use SsdPHP\Core\RegShutdownEvent,
+    SsdPHP\Core\Route,
+    SsdPHP\Core\Error,
     SsdPHP\Core\Config,
     SsdPHP\SsdPHP;
 SsdPHP::setRootPath($rootpath);
