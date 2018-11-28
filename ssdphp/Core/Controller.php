@@ -17,12 +17,7 @@ class Controller
     public function __construct($config=null)
     {
         if(empty($this->_View)){
-            $adapter="Tpl";
-            if(!empty($config['Adaptor'])) {
-                $adapter=$config['Adaptor'];
-            }
-
-            $this->_View = View::getInstance($adapter,$config);
+            $this->_View = View::getInstance("Tpl",$config);
         }
     }
 
