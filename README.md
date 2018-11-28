@@ -1,2 +1,2 @@
 # ssdphp
-a small web development framework
+A small and efficient web development framework
