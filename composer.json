@@ -1,0 +1,18 @@
+{
+  "name": "ssdphp/ssdphp",
+  "description": "A small and efficient web development PHP framework",
+  "keywords": ["php", "framework", "ssdphp"],
+  "homepage": "https://github.com/ssdphp/ssdphp",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "ssdphp",
+      "email": "ssdphp@ssdphp.com",
+      "homepage": "https://github.com/ssdphp"
+    }
+  ],
+  "autoload":{
+    "psr-0": { "SsdPHP\\": "" }
+  }
+}
