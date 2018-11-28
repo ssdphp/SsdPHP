@@ -17,6 +17,8 @@
   },
   "version": "1.0.0",
   "autoload":{
-    "psr-0": { "SsdPHP\\": "" }
+    "psr-4": {
+      "SsdPHP\\": "ssdphp"
+    }
   }
 }
