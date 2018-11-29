@@ -2,7 +2,6 @@
 if($vendorFile = realpath(__DIR__.'/../vendor/autoload.php')){
     require $vendorFile;
 }
-require realpath(__DIR__.'/../ssdphp/SsdPHP.php');
 //~^(?<subdomain>.+)\.(?<model>.*)\.domain.com;
 //http://ssdphp.admin.xx.com
 //http://ssdphp.api.xx.com
