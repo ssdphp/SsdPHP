@@ -1,0 +1,152 @@
+<style type="text/css">
+    .rule_check{ border:#ECECEC solid 1px; line-height: 30px;font-size: 14px;margin-bottom: 10px}
+    .level_one{ background: #ececec;padding:0 10px;}
+    .level_two{ padding:0 10px;color:#444;}
+    .level_three{ padding:0 30px;color:#444;}
+    .level_three label{ font-weight: normal}
+    .level_four{ padding:0 60px;color:#444;}
+    .level_four label{  font-weight: normal;font-size: 12px}
+</style>
+<div class="am-g">
+    <div class="am-u-sm-12 am-u-md-6 am-padding-bottom">
+
+        <div>
+            <b>当前权限组：</b>【{$accessInfo['title']}】
+        </div>
+    </div>
+</div>
+
+<div class="am-g">
+    <div class="am-u-sm-12">
+        <form class="form-panel" id="form1" method="post">
+            {foreach ($menu_node as $v)}
+            <div class="rule_check">
+                <div class="level_one">
+                    <label>
+                        <input type="checkbox" {$v["checked"]} value="{$v['id']}" name="rule[]">{$v['title']}
+                    </label>
+                </div>
+                {foreach ($v['child'] as $child)}
+                <dl>
+                    <dt class="level_two">
+                        <label><input type="checkbox" {$child["checked"]} value="{$child['id']}" name="rule[]">{$child['title']}</label>
+                    </dt>
+                    {if(!empty($child['child']))}
+                    <dd>
+                        <span class="level_four">
+                            {foreach ($child['child'] as $method)}
+                            <label>
+                                <input type="checkbox" {$method["checked"]} value="{$method['id']}" name="rule[]" title="{echo !empty($method['descript'])?$method['descript']:''}">{$method['title']}
+                            </label>&nbsp;&nbsp;
+                            {/foreach}
+                        </span>
+                    </dd>
+                    {/if}
+
+
+                </dl>
+                {/foreach}
+            </div>
+            {/foreach}
+
+            <!--<div class="rule_check">
+                <div class="level_one">
+                    <label><input type="checkbox" checked="" value="2" name="rule[]">系统</label>
+                </div>
+                <dl>
+                    <dt class="level_two">
+                        <label><input type="checkbox" checked="" value="3" name="rule[]">系统设置</label>
+                    </dt>
+                    <dd>
+                        <div class="level_three">
+                            <label><input type="checkbox" checked="" value="4" name="rule[]">菜单管理</label>
+                        </div>
+                        <span class="level_four">
+                            <label><input type="checkbox" checked="" value="5" name="rule[]">新增</label>
+                            <label><input type="checkbox" checked="" value="6" name="rule[]">删除</label>
+                            <label><input type="checkbox" checked="" value="7" name="rule[]">编辑</label>
+                        </span>
+                    </dd>
+                </dl>
+            </div>-->
+            <input type="hidden" name="qid" value="{$accessInfo['id']}">
+            <button type="button" id="button" class="am-btn am-btn-primary">保存权限</button>
+            <button type="button" onclick="window.history.back()" class="am-btn am-btn-warning">&lt;返回</button>
+        </form>
+    </div>
+</div>
+<script>
+    require(['jquery',
+        'dialog',
+        'upload',
+        'amazeui',
+        'app',
+        'drag',
+        'dialog-plus','dialog-plus'
+    ],function ($,dialog){
+        function zalert(msg,$class) {
+            $class = $class ?$class : 'warning';
+            msg = msg ? msg : '操作有误！';
+            var d = dialog({
+                id:'id2',
+                zIndex:1505,
+                quickClose:true,
+                content: '<span class="am-icon-btn am-'+$class+' am-icon-'+$class+'"></span>　'+msg
+            }).show();
+        }
+        $('#button').on('click',function () {
+
+            if($('input[name="qid"]').val() == ""){
+                zalert($('input[name="title"]').attr('errmsg'));
+                return ;
+            }
+            $.ajax({
+                'type':'post',
+                'url':'/auth_group/rule_save',
+                'data':$('#form1').serialize(),
+                'dataType':'json',
+                'success':function (ret) {
+                    if(ret.code == 1){
+                        zalert(ret.code_str,'icon-check am-success');
+                    }else{
+                        zalert(ret.code_str);
+                    }
+                },'error':function (err) {
+                    console.log(err);
+                }
+            });
+
+
+        });
+
+        $('.level_one').find('input').click(function (){
+            if($(this).prop('checked')){
+                $(this).parents('.rule_check').find('input').prop('checked',true);
+            }else{
+                $(this).parents('.rule_check').find('input').prop('checked',false);
+            }
+        });
+        $('.level_two').find('input').click(function (){
+            if($(this).prop('checked')){
+                $(this).parents('dl').find('input').prop('checked',true);
+            }else{
+                $(this).parents('dl').find('input').prop('checked',false);
+            }
+        });
+        $('.level_three').find('input').click(function (){
+            if($(this).prop('checked')){
+                $(this).parents('dd').find('span input').prop('checked',true);
+            }else{
+                $(this).parents('dd').find('span input').prop('checked',false);
+            }
+        });
+        $('.level_four').find('input').click(function (){
+            if($(this).prop('checked')){
+                $(this).parents('dd').find('.level_three input').prop('checked',true);
+                $(this).parents('dl').find('.level_two input').prop('checked',true);
+                $(this).parents('.rule_check').find('.level_one input').prop('checked',true);
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,123 @@
+<div class="am-g">
+
+    <form class="am-form" id="form1" onsubmit="return false;">
+    <div class="am-tabs am-margin" data-am-tabs >
+        <input type="hidden" name="pid" value="{$_GET['pid']}">
+        <input type="hidden" name="id" value="{echo !empty($info['id'])?$info['id']:'0'}">
+        <div class="am-g am-margin-top">
+            <div class="am-u-md-2 am-text-right">菜单名称</div>
+            <div class="am-u-md-4">
+                <input type="text" placeholder="" errmsg="请填写菜单名称" name="title" value="{echo !empty($info['title'])?$info['title']:''}" class="am-input-sm">
+            </div>
+            <div class="am-u-md-6">*必填，切勿乱填.</div>
+        </div>
+
+        <div class="am-g am-margin-top">
+            <div class="am-u-md-2 am-text-right">url</div>
+            <div class="am-u-md-4">
+                <input type="text" placeholder="" errmsg="请填写url" name="url" value="{echo !empty($info['url'])?$info['url']:''}" class="am-input-sm">
+            </div>
+            <div class="am-u-md-6">*必填，切勿乱填.</div>
+        </div>
+
+        <div class="am-g am-margin-top">
+            <div class="am-u-md-2 am-text-right">图标样式</div>
+            <div class="am-u-md-4">
+                <input type="text" placeholder="" name="icon_class" value="{echo !empty($info['icon_class'])?$info['icon_class']:''}" class="am-input-sm">
+            </div>
+            <div class="am-u-md-6">*必填，切勿乱填.</div>
+        </div>
+
+        <div class="am-g am-margin-top">
+            <div class="am-u-md-2 am-text-right">菜单状态</div>
+            <div class="am-u-md-4">
+                <label class="am-radio-inline">
+                    <input type="radio" name="status" value="1"> 正常
+                </label>
+                <label class="am-radio-inline">
+                    <input type="radio" name="status" value="2"> 隐藏
+                </label>
+            </div>
+            <div class="am-u-md-6"></div>
+        </div>
+
+        <div class="am-g am-margin-top">
+            <div class="am-u-md-2 am-text-right">菜单描述</div>
+            <div class="am-u-md-4">
+                <input type="text" placeholder="" name="descript" value="{echo !empty($info['descript'])?$info['descript']:''}" class="am-input-sm">
+            </div>
+            <div class="am-u-md-6"></div>
+        </div>
+
+        <div class="am-g am-margin-top">
+            <div class="am-u-md-2 am-text-right">排序值</div>
+            <div class="am-u-md-1">
+                <input type="text" placeholder="" name="sort" value="0" class="am-input-sm">
+            </div>
+            <div class="am-u-md-3"></div>
+            <div class="am-u-md-6">*必填，切勿乱填.</div>
+        </div>
+
+
+
+        <div class="am-margin am-g am-margin-top">
+            <div class="am-u-md-2"></div>
+            <div class="am-u-md-10 am-text-left">
+
+                <button type="button" id="submit" class="am-btn am-btn-primary am-radius">提交保存</button>
+                <button type="button" onclick="window.history.back()" class="am-btn am-btn-danger am-radius"><< 返回</button>
+            </div>
+        </div>
+    </div>
+
+    </form>
+</div>
+<script>
+    require(['jquery',
+                'dialog',
+                'upload',
+                'amazeui',
+                'app',
+                'drag',
+        'uedit-config',
+        'dialog-plus','uedit','dialog-plus'
+            ],function ($,dialog){
+
+        function zalert(msg,$class) {
+            $class = $class ?$class : 'warning';
+            msg = msg ? msg : '操作有误！';
+            var d = dialog({
+                id:'id2',
+                zIndex:1505,
+                quickClose:true,
+                content: '<span class="am-icon-btn am-'+$class+' am-icon-'+$class+'"></span>　'+msg
+            }).show();
+        }
+
+        $('#submit').on('click',function () {
+
+            if($('input[name="title"]').val() == ""){
+                zalert($('input[name="title"]').attr('errmsg'));
+                return ;
+            }
+            $.ajax({
+                'type':'post',
+                'url':'/admin/{echo !empty($_GET["id"])?"menu_edit":"menu_add"}',
+                'data':$('#form1').serialize(),
+                'dataType':'json',
+                'success':function (ret) {
+                    if(ret.code == 1){
+                        zalert(ret.code_str,'icon-check am-success');
+                    }else{
+                        zalert(ret.code_str);
+                    }
+                },'error':function (err) {
+                    console.log(err);
+                }
+            });
+
+
+        });
+    });
+</script>
+
