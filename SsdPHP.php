@@ -334,9 +334,9 @@ class SsdPHP{
             $_GET       =  array_merge($var,$_GET);
             $_REQUEST   =  array_merge($_GET,$_POST);
         }
-        self::$model        = self::$model?self::$model:ucfirst(strtolower(!empty($path_array[0]) ? $path_array[0] : self::$defaultModel));
-        self::$controller   = self::$controller?self::$controller:strtolower(!empty($path_array[1]) ? $path_array[1] : self::$defaultController);
-        self::$action       = self::$action?self::$action:strtolower(!empty($path_array[2]) ? $path_array[2] : self::$defaultAction);
+        self::$model        = self::$model?self::$model:ucfirst(strtolower(!empty($path_array[0]) ? $path_array[0] : ucfirst(self::$defaultModel)));
+        self::$controller   = self::$controller?self::$controller:strtolower(!empty($path_array[1]) ? $path_array[1] : strtolower(self::$defaultController));
+        self::$action       = self::$action?self::$action:strtolower(!empty($path_array[2]) ? $path_array[2] : strtolower(self::$defaultAction));
         //find APP/namespace classname
         $classname  = "\\App\\".self::$model."\\Controller\\"."C".self::getController();
         //---start
