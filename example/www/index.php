@@ -2,7 +2,8 @@
 if($vendorFile = realpath(__DIR__.'/../vendor/autoload.php')){
     require $vendorFile;
 }
-//~^(?<subdomain>.+)\.(?<model>.*)\.domain.com;
+//nginx config
+//server_name ~^(?<subdomain>.+)\.(?<model>.*)\.domain.com;
 //http://ssdphp.admin.xx.com
 //http://ssdphp.api.xx.com
 //http://ssdphp.home.xx.com
@@ -13,20 +14,22 @@ if(($r = SsdPHP\SsdPHP::Bootstrap(function (){
         SsdPHP\SsdPHP::setDebug(true);
         SsdPHP\Core\Error::$CONSOLE =SsdPHP\SsdPHP::getDebug();
         if (strpos($_SERVER['HTTP_HOST'], "admin") !== false) {
-            \SsdPHP\SsdPHP::setDefaultModel("Admin");
+            $model = "admin";
         }elseif(strpos($_SERVER['HTTP_HOST'], "home") !== false) {
-            \SsdPHP\SsdPHP::setDefaultModel("Home");
+            $model = "home";
         }elseif(strpos($_SERVER['HTTP_HOST'], "api") !== false) {
-            \SsdPHP\SsdPHP::setDefaultModel("Api");
+            $model = "api";
         }else {
             exit();
         }
+        \SsdPHP\SsdPHP::setDefaultModel($model);
         //加载配置文件
         SsdPHP\Core\Config::load($appRoot."/Config");
-        SsdPHP\Core\Route::set(\SsdPHP\Core\Config::getField('route','api'));
+        //加载路由配置
+        SsdPHP\Core\Route::set(\SsdPHP\Core\Config::getField('route',$model));
 
         //加载语言包
-        SsdPHP\Core\Language::load($appRoot."/resources/lang/",SsdPHP\SsdPHP::getModel());
+        SsdPHP\Core\Language::load($appRoot."/resources/lang/",$model);
         SsdPHP\Session\Session::Start();
     })->Run()) === false){
     header('HTTP/1.1 404 Not Found');
