@@ -14,7 +14,7 @@
  * 
  *        
  */
-namespace  SsdPHP\Pulgins\PushBaiduNew;
+namespace  SsdPHP\PushBaiduNew;
 
 if(!defined('PUSH_SDK_HOME')){
     define('PUSH_SDK_HOME', dirname(__FILE__));
