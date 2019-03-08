@@ -28,7 +28,7 @@ class Config
         if(empty($configPath)){
             $configPath = SsdPHP::getRootPath().'Config';
         }
-        $tmpfile = sys_get_temp_dir().md5(realpath($configPath));
+        $tmpfile = sys_get_temp_dir()."/".md5(realpath($configPath));
         if(!is_dir($configPath)){
             throw new \Exception("no dir: $configPath");
         }

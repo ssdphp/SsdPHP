@@ -50,7 +50,7 @@ class Language
             return ;
         }
         self::$LanguagePath = $srcPath;
-        $tmpfile = sys_get_temp_dir().md5(realpath($srcPath.$defaultModel));
+        $tmpfile = sys_get_temp_dir()."/".md5(realpath($srcPath.$defaultModel));
         if(SsdPHP::getDebug() == false){
             fileatime($srcPath);
             if(is_file($tmpfile) && filemtime($tmpfile)>=filemtime($srcPath)){
