@@ -329,7 +329,7 @@ class SsdPHP{
         if(!empty($url_param)){
             $var = array();
             preg_replace_callback("/(\w+?)\/([^\/?]+)/", function ($match) use (&$var) {
-                $var[$match[1]] = strip_tags($match[2]);
+                $var[$match[1]] = strip_tags(str_replace(".html","",$match[2]));
             },implode(self::$splitFlag, $url_param));
             $_GET       =  array_merge($var,$_GET);
             $_REQUEST   =  array_merge($_GET,$_POST);

@@ -197,7 +197,9 @@ class Mysql
         }
 
         self::$_mysql[$guid]->setCount(isset($this->count) ? $this->count : false);
-
+        $this->count = false;
+        $this->page = 1;
+        $this->pageszie = 10;
         return call_user_func_array (array(&self::$_mysql[$guid],$method_name),$arguments);
     }
 }
