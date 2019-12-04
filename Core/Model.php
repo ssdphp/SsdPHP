@@ -143,41 +143,100 @@ class Model{
         }
         return $ret;
     }
-	
-	/**
-	 * insert
-	 * @param string|array|object $table
-	 * @param string|array|object $item 
-	 * @param boolean $isreplace
-	 * @param boolean $isdelayed
-	 * @param string|array|object $update
-	 * @return int|boolean int(lastInsertId or affectedRows)
-	 */
-	protected function insert($item="",$isreplace=false,$isdelayed=false,$update=array()){
-		
-		$last_id = $this->_db->insert($item,$isreplace,$isdelayed,$update);
-		return $last_id;
-	}
-	
-	/**
-	 * update data
-	 *
-	 * @param string|array|object $table
-	 * @param string|array|object $condition
-	 * @param string|array|object $item
-	 * @return int|boolean
-	 */
-	protected function update($condition,$item){
-		return $this->_db->update($condition,$item);
-	}
 
-	/**
-	*
-	* @param string $sql
-	* @return boolean|int|array
-	*/
-	protected function exec($sql){
-		return $this->_db->execute($sql);
-	}
+    /**
+     * insert
+     * @param string|array|object $table
+     * @param string|array|object $item
+     * @param boolean $isreplace
+     * @param boolean $isdelayed
+     * @param string|array|object $update
+     * @return int|boolean int(lastInsertId or affectedRows)
+     */
+    protected function insert($item="",$isreplace=false,$isdelayed=false,$update=array()){
 
+        $last_id = $this->_db->insert($item,$isreplace,$isdelayed,$update);
+        return $last_id;
+    }
+
+    /**
+     * update data
+     *
+     * @param string|array|object $table
+     * @param string|array|object $condition
+     * @param string|array|object $item
+     * @return int|boolean
+     */
+    protected function update($condition,$item){
+        return $this->_db->update($condition,$item);
+    }
+
+    /**
+     *
+     * @param string $sql
+     * @return boolean|int|array
+     */
+    protected function exec($sql){
+        return $this->_db->execute($sql);
+    }
+
+
+    /**
+     * 获取一条数据
+     * @param array $cond
+     * @param array $feild
+     * @return array|mixed
+     */
+    public function findone($cond=array(),$feild=["*"]){
+
+        $ret = $this->selectOne($cond,$feild);
+        if(!empty($ret)){
+            return $ret;
+        }
+        return [];
+    }
+
+    /**
+     * 添加
+     */
+    public function add($data=array()){
+        if(empty($data)){
+            return false;
+        }
+        return $this->insert($data);
+    }
+
+    /**
+     * 获取列表
+     * @param array $cond
+     * @param int $page
+     * @param int $pagesize
+     * @param array $field
+     * @param string $order
+     * @return mixed
+     */
+    public function getList($cond=array(),$page=1,$pagesize=10,$field=array("*"),$order=""){
+
+        $a = $this->setPage($page,$pagesize)
+            ->select($cond,$field,"",$order);
+
+        return $a;
+    }
+
+    /**
+     * 更新
+     */
+    public function updateInfo($condition,$item){
+
+        return $this->update($condition,$item);
+    }
+
+    /**
+     * 删除
+     */
+    public function del($condition){
+
+        $id = $this->delete($condition);
+        return $id;
+    }
 }

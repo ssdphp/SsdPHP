@@ -60,7 +60,8 @@ class Redis
         if(!empty($this->config['sid_prefix'])) {
             $sid = $this->config['sid_prefix'].$sid;
         }
-        return (bool)$this->redis->setex($sid, $this->gcTime, $data);
+        $s = $this->redis->setex($sid, $this->gcTime, $data);
+        return (bool)$s;
     }
 
     public function destroy($sid="")

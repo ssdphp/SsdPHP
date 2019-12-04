@@ -1,6 +1,7 @@
 <?php
 
 namespace SsdPHP\Session;
+use App\Common\Tool\Functions;
 use SsdPHP\Core\Factory as SFactory,
     SsdPHP\Core\Config as SConfig;
 use SsdPHP\SsdPHP;
@@ -46,19 +47,24 @@ class Session
             }
 
             $sessionName = empty($config['session_name']) ? 'SSDPHPSESSID' : $config['session_name'];
-            $preSessionName = session_name($sessionName);
+            //set session_name
+            session_name($sessionName);
 
             if(!empty($_GET[$sessionName])) {
-                session_id($_GET[$sessionName]);
+                $tv=($_GET[$sessionName]);
             }elseif(!empty($_POST[$sessionName])) {
-                session_id($_POST[$sessionName]);
+                $tv=($_POST[$sessionName]);
             }elseif(!empty($_SERVER[$sessionName])) {
-                session_id($_SERVER[$sessionName]);
+                $tv=($_SERVER[$sessionName]);
             }elseif(!empty($_COOKIE[$sessionName])) {
-                session_id($_COOKIE[$sessionName]);
+                $tv=($_COOKIE[$sessionName]);
             }
-            //print_r($_GET);
-
+            if(empty($tv) || strlen($tv)<20){
+                $tv = Functions::uniqidReal(32,false);
+            }
+            if(!empty($tv)){
+                session_id($tv);
+            }
             if (!empty($config['sessionType'])) {
                 $handler = self::getInstance($config['sessionType'], $config);
                 session_set_save_handler(
