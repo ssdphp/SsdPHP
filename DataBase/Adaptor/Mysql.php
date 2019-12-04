@@ -300,13 +300,15 @@ class Mysql{
 		//{{{
 		//SQL MODE 默认为DELETE，INSERT，REPLACE 或 UPDATE,不需要返回值
 		$sql_mode = 1;//1.更新模式 2.查询模式 3.插入模式
-
-		if(stripos($sql,"INSERT")!==false){
-			$sql_mode = 3;
-		}else{
+		//INSERT查询第一个开始，才确定为插入模式
+        $ss = stripos($sql,"INSERT");
+        if($ss!==false && $ss==0){
+            $sql_mode = 3;
+        }else{
 			$sql_result_query=array("SELECT","SHOW","DESCRIBE","EXPLAIN");
 			foreach($sql_result_query as $query_type){
-				if(stripos($sql,$query_type)!==false){
+                $s = stripos($sql,$query_type);
+				if($s !== false && $s == 0){
 					$sql_mode = 2;
 					break;
 				}
