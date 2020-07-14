@@ -187,7 +187,7 @@ class Model{
      * @param array $feild
      * @return array|mixed
      */
-    public function findone($cond=array(),$feild=["*"]){
+    public function _findone($cond=array(),$feild=["*"]){
 
         $ret = $this->selectOne($cond,$feild);
         if(!empty($ret)){
@@ -199,7 +199,7 @@ class Model{
     /**
      * 添加
      */
-    public function add($data=array()){
+    public function _add($data=array()){
         if(empty($data)){
             return false;
         }
@@ -215,7 +215,7 @@ class Model{
      * @param string $order
      * @return mixed
      */
-    public function getList($cond=array(),$page=1,$pagesize=10,$field=array("*"),$order=""){
+    public function _getList($cond=array(),$page=1,$pagesize=10,$field=array("*"),$order=""){
 
         $a = $this->setPage($page,$pagesize)
             ->select($cond,$field,"",$order);
@@ -226,7 +226,7 @@ class Model{
     /**
      * 更新
      */
-    public function updateInfo($condition,$item){
+    public function _updateInfo($condition,$item){
 
         return $this->update($condition,$item);
     }
@@ -234,7 +234,7 @@ class Model{
     /**
      * 删除
      */
-    public function del($condition){
+    public function _del($condition){
 
         $id = $this->delete($condition);
         return $id;
