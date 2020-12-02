@@ -47,7 +47,7 @@ class Redis
         }
         $data = $this->redis->get($sid);
         if (!empty($data)) {
-            $this->redis->setTimeout($sid, $this->gcTime);
+            $this->redis->expire($sid, $this->gcTime);
         }
         return !empty($data)?$data:"";
     }
@@ -72,7 +72,7 @@ class Redis
         if(!empty($this->config['sid_prefix'])) {
             $sid = $this->config['sid_prefix'].$sid;
         }
-        return (bool)$this->redis->delete($sid);
+        return (bool)$this->redis->del($sid);
     }
 
     public function create_sid(){
