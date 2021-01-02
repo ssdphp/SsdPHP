@@ -5,10 +5,10 @@
  */
 
 
-namespace SsdPHP\Pulgins\Session\Adaptor;
+namespace SsdPHP\Session\Adaptor;
 
 use SsdPHP\SsdPHP;
-use SsdPHP\Pulgins\File\Dir;
+use SsdPHP\File\Dir;
 
 class File
 {
