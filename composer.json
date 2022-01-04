@@ -3,7 +3,6 @@
   "description": "A small and efficient web development PHP framework",
   "keywords": ["php", "framework", "ssdphp"],
   "homepage": "https://github.com/ssdphp/ssdphp",
-  "type": "library",
   "license": "MIT",
   "authors": [
     {
@@ -21,5 +20,10 @@
     "psr-4": {
       "SsdPHP\\": ""
     }
-  }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
