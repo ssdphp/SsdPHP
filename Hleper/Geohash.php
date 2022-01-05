@@ -7,7 +7,7 @@
  * Author: Bruce Chen (weibo: @一个开发者)
  *
  */
-namespace SsdPHP\Pulgins\Hleper;
+namespace SsdPHP\Hleper;
 /**
  *
  * Encode and decode geohashes
